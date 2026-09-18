@@ -1,0 +1,93 @@
+/* ecomfy — UX do Painel de Vendas */
+
+#app{background:var(--bg);}
+#sidebar{width:238px;padding:22px 0;position:sticky;top:0;height:100vh;}
+.brand{padding:0 22px 22px;margin-bottom:16px;}
+.brand .name{font-size:16px;letter-spacing:-.02em;}
+.brand .sub{font-size:11px;margin-top:4px;}
+.nav-item{padding:11px 22px;min-height:42px;border-left-width:3px;transition:background .15s ease,color .15s ease,border-color .15s ease;}
+.nav-item svg{width:17px;height:17px;}
+.nav-item.active{box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);}
+.sidebar-footer{padding:16px 22px 0;line-height:1.5;}
+#topbar{padding:15px 32px;min-height:72px;position:sticky;top:0;z-index:20;box-shadow:0 1px 0 var(--border);}
+#topbar h1{font-size:17px;letter-spacing:-.02em;}
+#topbar .period{font-size:12px;max-width:min(70vw,850px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+main.content{padding:30px 32px 64px;}
+
+/* Tela inicial: transforma o upload em uma entrada de produto mais clara. */
+#upload-screen{max-width:760px;margin:7vh auto 0;text-align:left;}
+#upload-screen .eyebrow{font-size:11px;letter-spacing:.1em;margin-bottom:10px;}
+#upload-screen h2{font-size:30px;line-height:1.15;letter-spacing:-.035em;margin-bottom:10px;}
+#upload-screen p.lead{max-width:650px;font-size:14px;line-height:1.65;margin-bottom:24px;}
+#dropzone{position:relative;padding:48px 28px;border:1.5px dashed #cfd6e4;border-radius:12px;box-shadow:0 8px 28px rgba(16,24,40,.05);text-align:center;background:var(--card);}
+#dropzone:hover{border-color:var(--blue);background:var(--blue-light);}
+#dropzone .upload-icon{width:52px;height:52px;margin-bottom:16px;}
+#dropzone h3{font-size:15px;margin-bottom:6px;}
+#dropzone p{font-size:12.5px;}
+#staged-panel{margin-top:14px;padding:14px 16px;border-radius:10px;box-shadow:var(--shadow);}
+#staged-panel .actions{align-items:center;}
+#status-msg{min-height:20px;line-height:1.5;}
+
+/* Dashboard */
+#dashboard{max-width:1440px;margin:0 auto;}
+#kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px;}
+.kpi{min-height:112px;padding:17px 18px;border-radius:10px;transition:transform .15s ease,box-shadow .15s ease;}
+.kpi:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(16,24,40,.08);}
+.kpi .label{text-transform:none;font-size:11.5px;letter-spacing:.01em;}
+.kpi .value{font-size:24px;line-height:1.15;}
+.kpi .sub{line-height:1.4;}
+.card{border-radius:10px;padding:20px 20px 22px;margin-bottom:16px;}
+.card h3{font-size:14px;letter-spacing:-.01em;}
+.card .hint{line-height:1.5;margin-bottom:14px;}
+.grid2{gap:16px;}
+.grid3{gap:16px;}
+table{font-size:12.5px;}
+thead th{padding:9px 10px;font-size:10.5px;}
+tbody td{padding:10px;}
+
+/* Navegação lateral fica claramente clicável após o relatório ser carregado. */
+.nav-item:not([disabled]){cursor:pointer;}
+.nav-item:not([disabled]):hover{transform:translateX(1px);}
+
+@media (max-width:1100px){
+  #kpis{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #sidebar{width:210px;}
+  main.content{padding:24px 22px 56px;}
+  #topbar{padding:14px 22px;}
+}
+
+@media (max-width:900px){
+  #sidebar{width:64px;position:fixed;left:0;top:0;bottom:0;z-index:30;}
+  .brand{padding:0 10px 16px;text-align:center;}
+  .brand .name,.brand .sub,.nav-item span{display:none;}
+  .nav-item{justify-content:center;padding:11px 8px;}
+  .sidebar-footer{display:none;}
+  #main{margin-left:64px;}
+  #topbar{position:sticky;top:0;padding:13px 16px;}
+  #topbar .period{max-width:58vw;}
+  main.content{padding:20px 16px 48px;}
+  #upload-screen{margin:5vh auto 0;}
+  #upload-screen h2{font-size:25px;}
+  #dropzone{padding:40px 20px;}
+}
+
+@media (max-width:620px){
+  #kpis{grid-template-columns:1fr 1fr;gap:10px;}
+  .kpi{min-height:100px;padding:14px;}
+  .kpi .value{font-size:19px;}
+  .kpi .sub{font-size:10.5px;}
+  #upload-screen{margin-top:28px;}
+  #upload-screen h2{font-size:23px;}
+  #upload-screen p.lead{font-size:13px;}
+  #staged-panel{flex-direction:column;align-items:stretch;}
+  #staged-panel .actions{justify-content:flex-end;}
+  #topbar{align-items:flex-start;}
+  #topbar h1{font-size:15px;}
+  #topbar .period{max-width:52vw;white-space:normal;line-height:1.35;}
+  #topbarActions .btn{padding:8px 11px;font-size:12px;}
+  .card{padding:16px 14px;overflow:hidden;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .kpi,.nav-item{transition:none;}
+}
