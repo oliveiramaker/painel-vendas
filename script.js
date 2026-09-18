@@ -1,0 +1,8 @@
+// Navegação do hub Ecomfy
+function syncHeaderHeight(){const header=document.querySelector('header');if(header)document.documentElement.style.setProperty('--header-h',header.offsetHeight+'px');}
+function setActiveNav(page){document.querySelectorAll('.nav-link[data-page], .mobile-nav-link[data-page]').forEach(link=>link.classList.toggle('active-nav',link.dataset.page===page));}
+function navigate(page,anchor){const target=document.getElementById('page-'+page);if(!target)return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));target.classList.add('active');setActiveNav(page);syncHeaderHeight();window.scrollTo({top:0,behavior:'smooth'});if(anchor)setTimeout(()=>document.getElementById(anchor)?.scrollIntoView({behavior:'smooth'}),50);}
+function toggleMobileMenu(){const menu=document.getElementById('mobileMenu');const button=document.querySelector('.mobile-menu-btn');if(!menu)return;const isHidden=menu.classList.toggle('hidden');button?.setAttribute('aria-expanded',String(!isHidden));}
+function navigateMobile(page){navigate(page);const menu=document.getElementById('mobileMenu');const button=document.querySelector('.mobile-menu-btn');menu?.classList.add('hidden');button?.setAttribute('aria-expanded','false');}
+window.addEventListener('load',()=>{syncHeaderHeight();setActiveNav('home');const nav=document.querySelector('.public-navbar nav');if(nav&&!nav.querySelector('a[href="planos.html"]')){const a=document.createElement('a');a.href='planos.html';a.textContent='Planos';nav.insertBefore(a,nav.lastElementChild);}});
+window.addEventListener('resize',syncHeaderHeight);
