@@ -1,0 +1,20 @@
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const cors = {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'authorization, x-client-info, apikey, content-type, x-kiwify-token, x-kiwify-webhook-token'};
+function text(v:unknown){return v==null?'':String(v).trim()} function first(...v:unknown[]){for(const x of v){const s=text(x);if(s)return s}return ''}
+function eventName(b:any){return first(b?.webhook_event_type,b?.event,b?.trigger,b?.type,b?.status_event).toLowerCase()}
+function emailOf(b:any){return first(b?.Customer?.email,b?.customer?.email,b?.buyer?.email,b?.buyer_email,b?.email,b?.data?.customer?.email,b?.data?.buyer?.email).toLowerCase()}
+function idOf(b:any){return first(b?.subscription_id,b?.subscription?.id,b?.subscription?.subscription_id,b?.data?.subscription_id,b?.order_id,b?.order?.id,b?.id)}
+function productIdOf(b:any){return first(b?.product_id,b?.product?.id,b?.Product?.id,b?.data?.product_id)}
+Deno.serve(async(req)=>{
+ if(req.method==='OPTIONS')return new Response('ok',{headers:cors});
+ if(req.method!=='POST')return new Response(JSON.stringify({ok:true,service:'ecomfy-kiwify-webhook'}),{headers:{...cors,'Content-Type':'application/json'}});
+ const expected=Deno.env.get('KIWIFY_WEBHOOK_TOKEN');if(!expected)return new Response(JSON.stringify({error:'Webhook não configurado: KIWIFY_WEBHOOK_TOKEN ausente.'}),{status:503,headers:{...cors,'Content-Type':'application/json'}});
+ const url=new URL(req.url);const supplied=first(req.headers.get('x-kiwify-webhook-token'),req.headers.get('x-kiwify-token'),req.headers.get('authorization')?.replace(/^Bearer\s+/i,''),url.searchParams.get('token'));if(supplied!==expected)return new Response(JSON.stringify({error:'Webhook não autorizado.'}),{status:401,headers:{...cors,'Content-Type':'application/json'}});
+ let body:any;try{body=await req.json()}catch{return new Response(JSON.stringify({error:'JSON inválido.'}),{status:400,headers:{...cors,'Content-Type':'application/json'}})}
+ const event=eventName(body),email=emailOf(body),providerId=idOf(body),productId=productIdOf(body);const activate=['compra_aprovada','subscription_renewed'].includes(event),revoke=['compra_reembolsada','chargeback','subscription_canceled'].includes(event);if(!activate&&!revoke)return new Response(JSON.stringify({ok:true,ignored:true,event}),{headers:{...cors,'Content-Type':'application/json'}});if(!email)return new Response(JSON.stringify({error:'Evento sem e-mail do comprador; nenhum usuário foi alterado.',event}),{status:422,headers:{...cors,'Content-Type':'application/json'}});
+ const supabase=createClient(Deno.env.get('SUPABASE_URL')!,Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,{auth:{persistSession:false}});const profile=await supabase.from('profiles').select('id,email').ilike('email',email).maybeSingle();if(profile.error)return new Response(JSON.stringify({error:profile.error.message}),{status:500,headers:{...cors,'Content-Type':'application/json'}});if(!profile.data?.id)return new Response(JSON.stringify({error:'Usuário Ecomfy não encontrado para o e-mail recebido.',email}),{status:404,headers:{...cors,'Content-Type':'application/json'}});
+ const newPlan=activate?'premium':'free',now=new Date().toISOString();const updateProfile=await supabase.from('profiles').update({plan:newPlan,updated_at:now}).eq('id',profile.data.id);if(updateProfile.error)return new Response(JSON.stringify({error:updateProfile.error.message}),{status:500,headers:{...cors,'Content-Type':'application/json'}});
+ const subscription=await supabase.from('subscriptions').upsert({user_id:profile.data.id,provider:'kiwify',provider_subscription_id:providerId||null,provider_product_id:productId||null,plan:newPlan,status:activate?'active':event,buyer_email:email,last_event:event,last_event_at:now,metadata:body},{onConflict:'user_id'});if(subscription.error)return new Response(JSON.stringify({error:subscription.error.message}),{status:500,headers:{...cors,'Content-Type':'application/json'}});
+ return new Response(JSON.stringify({ok:true,plan:newPlan,event,user_id:profile.data.id}),{headers:{...cors,'Content-Type':'application/json'}});
+});
