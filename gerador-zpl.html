@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Converta etiquetas ZPL da Shopee em PDF pronto para impressão, diretamente no navegador.">
+  <title>Gerador de Etiquetas ZPL — Ecomfy</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="theme.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-950 text-white">
+  <section class="tool-hero tool-hero-orange border-b border-zinc-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14 flex items-start gap-4">
+      <div class="tool-hero-icon orange"><i class="fa-solid fa-tags"></i></div>
+      <div>
+        <span class="eyebrow orange-text">Operação</span>
+        <h1 class="text-3xl sm:text-4xl font-bold mt-1">Gerador de Etiquetas</h1>
+        <p class="text-zinc-400 mt-2 max-w-2xl">Converta arquivos ZPL da Shopee em PDF pronto para impressão, diretamente no navegador.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+      <div class="space-y-6">
+        <div class="tool-panel">
+          <div class="panel-heading"><div><span class="eyebrow">1 · Arquivos</span><h2>Envie suas etiquetas</h2></div><i class="fa-solid fa-cloud-arrow-up panel-heading-icon"></i></div>
+          <div id="dropZone" class="upload-zone" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="Selecionar arquivos ZPL">
+            <div class="upload-zone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <p class="text-zinc-200 font-semibold">Arraste os arquivos aqui</p>
+            <p class="text-zinc-500 text-sm mt-1">ou clique para selecionar</p>
+            <span class="upload-format">.TXT ou .ZIP</span>
+          </div>
+          <input type="file" id="fileInput" multiple accept=".txt,.zip" class="hidden">
+          <div id="fileListDisplay" class="hidden mt-5"><div id="fileItems" class="space-y-2"></div></div>
+
+          <div class="mt-6">
+            <label class="block text-sm font-semibold text-zinc-300 mb-2"><i class="fa-solid fa-at text-blue-400 mr-2"></i>Rede social <span class="text-zinc-500 font-normal">(opcional)</span></label>
+            <input type="text" id="redeSocial" placeholder="@sua_loja" class="form-input w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+          </div>
+
+          <div class="flex gap-3 mt-6">
+            <button onclick="processar()" class="primary-cta flex-1"><i class="fa-solid fa-file-pdf"></i> Gerar PDF</button>
+            <button onclick="limparArquivos()" class="icon-action" title="Limpar arquivos" aria-label="Limpar arquivos"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+
+        <div class="tool-panel compact-panel">
+          <div class="panel-heading"><div><span class="eyebrow">Passo a passo</span><h2>Como usar</h2></div><i class="fa-solid fa-circle-question panel-heading-icon"></i></div>
+          <div class="space-y-4">
+            <div class="instruction"><span>01</span><div><strong>Baixe as etiquetas</strong><p>No Painel do Vendedor da Shopee, baixe os arquivos ZPL.</p></div></div>
+            <div class="instruction"><span>02</span><div><strong>Envie os arquivos</strong><p>Arraste os arquivos para a área acima ou selecione no computador.</p></div></div>
+            <div class="instruction"><span>03</span><div><strong>Gere o PDF</strong><p>Informe sua rede social se quiser e clique em gerar.</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6 lg:sticky lg:top-6">
+        <div class="tool-panel">
+          <div class="panel-heading"><div><span class="eyebrow orange-text">2 · Resultado</span><h2>Processamento</h2></div><i class="fa-solid fa-chart-simple panel-heading-icon orange-text"></i></div>
+          <div class="bg-zinc-800 rounded-full h-3 overflow-hidden mb-3"><div class="progress-fill" id="progressBar"></div></div>
+          <div class="flex justify-between text-sm text-zinc-500 mb-7"><span id="progressText">Aguardando arquivos...</span><span id="eta">--</span></div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="stat-card"><p class="text-3xl font-black text-blue-400" id="statTotal">0</p><p>Total</p></div>
+            <div class="stat-card"><p class="text-3xl font-black text-emerald-400" id="statOk">0</p><p>Concluídas</p></div>
+          </div>
+        </div>
+        <div class="privacy-note"><i class="fa-solid fa-shield-halved"></i><div><strong>Processamento local</strong><p>Seus arquivos são processados no navegador e não precisam ser enviados para um servidor.</p></div></div>
+      </div>
+    </div>
+  </main>
+  <script src="gerador-zpl.js"></script>
+</body>
+</html>
