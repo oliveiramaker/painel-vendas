@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Precificador Multiplataforma — ecomfy</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <script src="theme.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-950 text-white">
+
+  <section class="bg-gradient-to from-zinc-900 to-zinc-950 border-b border-zinc-800 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex items-center gap-4">
+      <div class="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center">
+        <i class="fa-solid fa-chart-line text-2xl text-blue-500"></i>
+      </div>
+      <div>
+        <h2 id="titulo-plataforma" class="text-3xl font-bold">Precificador Shopee</h2>
+        <p id="subtitulo-plataforma" class="text-zinc-400">Calcule comissão, imposto e lucro para CNPJ e CPF — 2026</p>
+      </div>
+    </div>
+  </section>
+
+
+    <!-- SELETOR DE PLATAFORMA -->
+    <div class="max-w-7xl mx-auto px-6 pt-8">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-2">
+        <div class="grid grid-cols-3 gap-2">
+          <button id="plataforma-shopee" onclick="switchPlataforma('shopee')"
+            class="plataforma-btn plataforma-ativa flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold transition">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Shopee</span>
+          </button>
+          <button id="plataforma-tiktok" onclick="switchPlataforma('tiktok')"
+            class="plataforma-btn flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold transition text-zinc-400 hover:text-white">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>TikTok Shop</span>
+          </button>
+          <button id="plataforma-mercadolivre" onclick="switchPlataforma('mercadolivre')"
+            class="plataforma-btn flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold transition text-zinc-400 hover:text-white">
+            <i class="fa-solid fa-store"></i>
+            <span>Mercado Livre</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <!-- CARD DA SHOPEE -->
+    <div id="card-shopee" class="platform-card">
+      <div class="mb-5 flex items-center gap-3">
+        <div class="w-10 h-10 bg-orange-500/10 rounded-xl flex items-center justify-center">
+          <i class="fa-solid fa-bag-shopping text-orange-400"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-lg">Precificador Shopee</h3>
+          <p class="text-zinc-500 text-sm">Cálculo completo de comissão, imposto, afiliados e Ads.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+      <!-- FORM -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+        <div class="flex bg-zinc-800 rounded-2xl p-1 mb-8">
+          <button id="tab-cnpj" onclick="switchTab('cnpj')"
+            class="flex-1 py-3 rounded-xl font-semibold text-sm transition tab-active">
+            <i class="fa-solid fa-building mr-2"></i>CNPJ
+          </button>
+          <button id="tab-cpf" onclick="switchTab('cpf')"
+            class="flex-1 py-3 rounded-xl font-semibold text-sm transition tab-inactive">
+            <i class="fa-solid fa-user mr-2"></i>CPF
+          </button>
+        </div>
+
+        <!-- MODO: DIRETO / REVERSO -->
+        <div class="flex bg-zinc-800/60 rounded-xl p-1 mb-6 text-xs">
+          <button id="modo-direto-btn" onclick="switchModo('direto')"
+            class="flex-1 py-2.5 rounded-lg font-semibold transition tab-active">
+            Já tenho o preço
+          </button>
+          <button id="modo-reverso-btn" onclick="switchModo('reverso')"
+            class="flex-1 py-2.5 rounded-lg font-semibold transition tab-inactive">
+            Descobrir preço ideal
+          </button>
+        </div>
+
+        <div class="space-y-5">
+
+          <div>
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-box text-blue-400 mr-2"></i>Custo do Produto (R$)
+            </label>
+            <input type="number" id="custo" step="0.01" placeholder="Ex: 80,00"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+          </div>
+
+          <!-- MODO DIRETO: preço de venda -->
+          <div id="campo-precoVenda">
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-tag text-blue-400 mr-2"></i>Preço de Venda (R$)
+            </label>
+            <input type="number" id="precoVenda" step="0.01" placeholder="Ex: 149,90"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+          </div>
+
+          <!-- MODO REVERSO: lucro desejado -->
+          <div id="campo-lucro" class="hidden">
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-sack-dollar text-blue-400 mr-2"></i>Lucro Desejado
+            </label>
+            <div class="flex bg-zinc-800 rounded-xl p-1 mb-3 text-xs">
+              <button id="lucro-valor-btn" onclick="switchLucroModo('valor')"
+                class="flex-1 py-2 rounded-lg font-semibold transition tab-active">R$ fixo</button>
+              <button id="lucro-margem-btn" onclick="switchLucroModo('margem')"
+                class="flex-1 py-2 rounded-lg font-semibold transition tab-inactive">% de margem</button>
+            </div>
+            <input type="number" id="lucroValor" step="0.01" placeholder="Ex: 20,00"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+            <input type="number" id="lucroMargem" step="0.1" placeholder="Ex: 25"
+              class="hidden w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-percent text-blue-400 mr-2"></i>Alíquota de Imposto (%)
+            </label>
+            <input type="number" id="aliquotaImposto" step="0.1" placeholder="Ex: 10"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white transition">
+          </div>
+
+          <div id="volume-group" class="hidden">
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-boxes-stacked text-blue-400 mr-2"></i>Volume de pedidos (últimos 90 dias)
+            </label>
+            <select id="volumeCpf"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white transition">
+              <option value="baixo">Menos de 450 pedidos</option>
+              <option value="alto">450 ou mais pedidos</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-zinc-300 mb-2">
+              <i class="fa-solid fa-users text-blue-400 mr-2"></i>Comissão de Afiliados (%)
+              <span class="text-zinc-500 font-normal normal-case">— opcional</span>
+            </label>
+            <input type="number" id="afiliadoPct" step="0.1" value="0" placeholder="Ex: 5"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+          </div>
+
+          <div>
+            <label class="flex items-center gap-2 text-sm font-semibold text-zinc-300 mb-2 cursor-pointer">
+              <input type="checkbox" id="usarAds" onchange="toggleAds()" class="w-4 h-4 rounded accent-blue-600">
+              <i class="fa-solid fa-bullhorn text-blue-400"></i>Incluir custo com Ads
+              <span class="text-zinc-500 font-normal normal-case">— opcional</span>
+            </label>
+            <div id="ads-fields" class="hidden mt-2">
+              <div class="flex bg-zinc-800 rounded-xl p-1 mb-3 text-xs">
+                <button id="ads-pct-btn" onclick="switchAdsModo('pct')"
+                  class="flex-1 py-2 rounded-lg font-semibold transition tab-active">% do preço (ROAS)</button>
+                <button id="ads-valor-btn" onclick="switchAdsModo('valor')"
+                  class="flex-1 py-2 rounded-lg font-semibold transition tab-inactive">R$ fixo por venda</button>
+              </div>
+              <input type="number" id="adsPct" step="0.1" placeholder="Ex: 10"
+                class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+              <input type="number" id="adsValor" step="0.01" placeholder="Ex: 5,00"
+                class="hidden w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500 transition">
+            </div>
+          </div>
+
+        </div>
+
+        <button onclick="calcular()"
+          class="mt-8 w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-3">
+          <i class="fa-solid fa-calculator"></i>Calcular Precificação
+        </button>
+
+        <div class="mt-6 info-card border border-zinc-700 rounded-2xl p-5">
+          <p id="regrasComissaoTitulo" class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-3">Regras de Comissão CNPJ — 2026</p>
+          <div id="regrasComissaoBody" class="space-y-2 text-sm text-zinc-400">
+            <div class="flex justify-between"><span>Até R$ 79,99</span><span class="text-zinc-200">20% + R$ 4,00</span></div>
+            <div class="flex justify-between"><span>R$ 80 ~ R$ 99,99</span><span class="text-zinc-200">14% + R$ 16,00</span></div>
+            <div class="flex justify-between"><span>R$ 100 ~ R$ 199,99</span><span class="text-zinc-200">14% + R$ 20,00</span></div>
+            <div class="flex justify-between"><span>R$ 200 ~ R$ 499,99</span><span class="text-zinc-200">14% + R$ 26,00</span></div>
+            <div class="flex justify-between"><span>Acima de R$ 500</span><span class="text-zinc-200">14% + R$ 28,00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULTADO -->
+      <div>
+        <div id="resultado" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+          <div class="flex items-center gap-3 mb-8">
+            <div class="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
+              <i class="fa-solid fa-circle-check text-emerald-500"></i>
+            </div>
+            <h3 class="text-xl font-bold">Resultado</h3>
+          </div>
+          <div id="detalhes" class="space-y-1"></div>
+        </div>
+        <div id="placeholder-prec" class="info-card border border-dashed border-zinc-800 rounded-3xl p-12 flex flex-col items-center justify-center text-center">
+          <div class="w-16 h-16 bg-zinc-800 rounded-2xl flex items-center justify-center mb-4">
+            <i class="fa-solid fa-chart-pie text-3xl text-zinc-600"></i>
+          </div>
+          <p class="text-zinc-500 font-medium">Preencha os campos ao lado</p>
+          <p class="text-zinc-600 text-sm mt-1">O resultado aparecerá aqui</p>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+    <!-- CARD DO TIKTOK SHOP -->
+    <div id="card-tiktok" class="platform-card hidden">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+        <div class="flex items-center gap-4 mb-7">
+          <div class="w-12 h-12 bg-pink-500/10 rounded-2xl flex items-center justify-center">
+            <i class="fa-brands fa-tiktok text-2xl text-pink-400"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Precificador TikTok Shop</h3>
+            <p class="text-zinc-400">Calcule as tarifas do TikTok Shop com base nas regras vigentes.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <div class="space-y-5">
+              <div>
+                <label class="block text-sm font-semibold text-zinc-300 mb-2">
+                  <i class="fa-solid fa-box text-pink-400 mr-2"></i>Custo do Produto (R$)
+                </label>
+                <input type="number" id="tt-custo" step="0.01" placeholder="Ex: 40,00"
+                  class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-zinc-300 mb-2">
+                  <i class="fa-solid fa-tag text-pink-400 mr-2"></i>Preço do Produto (R$)
+                </label>
+                <input type="number" id="tt-preco" step="0.01" placeholder="Ex: 79,90"
+                  class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-zinc-300 mb-2">
+                  <i class="fa-solid fa-ticket text-pink-400 mr-2"></i>Desconto do vendedor (R$)
+                </label>
+                <input type="number" id="tt-desconto" step="0.01" value="0" placeholder="Ex: 10,00"
+                  class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500">
+                <p class="text-xs text-zinc-500 mt-2">As tarifas são calculadas sobre o preço após o desconto do vendedor.</p>
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-zinc-300 mb-2">
+                  <i class="fa-solid fa-percent text-pink-400 mr-2"></i>Imposto (%)
+                </label>
+                <input type="number" id="tt-imposto" step="0.1" placeholder="Ex: 10"
+                  class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white">
+              </div>
+
+              <div>
+                <label class="block text-sm font-semibold text-zinc-300 mb-2">
+                  <i class="fa-solid fa-users text-pink-400 mr-2"></i>Comissão de Afiliados (%)
+                  <span class="text-zinc-500 font-normal normal-case">— opcional</span>
+                </label>
+                <input type="number" id="tt-afiliado" step="0.1" value="0" placeholder="Ex: 5"
+                  class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3.5 text-white placeholder-zinc-500">
+              </div>
+            </div>
+
+            <button onclick="calcularTikTok()"
+              class="mt-8 w-full bg-pink-600 hover:bg-pink-700 py-4 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-3">
+              <i class="fa-solid fa-calculator"></i>Calcular Precificação
+            </button>
+          </div>
+
+          <div>
+            <div id="tt-resultado" class="hidden info-card border border-zinc-700 rounded-3xl p-7">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
+                  <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                </div>
+                <h3 class="text-xl font-bold">Resultado TikTok Shop</h3>
+              </div>
+              <div id="tt-detalhes" class="space-y-1"></div>
+            </div>
+
+            <div id="tt-placeholder" class="info-card border border-dashed border-zinc-700 rounded-3xl p-10 text-center">
+              <div class="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <i class="fa-brands fa-tiktok text-2xl text-zinc-600"></i>
+              </div>
+              <p class="text-zinc-500 font-medium">Informe os dados do produto</p>
+              <p class="text-zinc-600 text-sm mt-1">O resultado da precificação aparecerá aqui</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-8 info-card border border-zinc-700 rounded-2xl p-5">
+          <p class="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-4">Regras usadas no cálculo</p>
+          <div class="space-y-2 text-sm text-zinc-400">
+            <div class="flex justify-between gap-4"><span>Preço após desconto &lt; R$ 50,00</span><span class="text-zinc-200">10% + R$ 4,00</span></div>
+            <div class="flex justify-between gap-4"><span>Preço após desconto ≥ R$ 50,00</span><span class="text-zinc-200">6% + R$ 6,00</span></div>
+          </div>
+          <p class="text-xs text-zinc-500 mt-4">
+            Regra baseada no material oficial do TikTok Shop, vigente a partir de 15/07/2026.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD DO MERCADO LIVRE -->
+    <div id="card-mercadolivre" class="platform-card hidden">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+        <div class="flex items-center gap-4 mb-7">
+          <div class="w-12 h-12 bg-yellow-400/10 rounded-2xl flex items-center justify-center">
+            <i class="fa-solid fa-store text-2xl text-yellow-300"></i>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold">Simulador de Custos Mercado Livre</h3>
+            <p class="text-zinc-400">Consulte os custos diretamente no simulador oficial do Mercado Livre.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="info-card border border-zinc-700 rounded-3xl p-7">
+            <div class="w-14 h-14 bg-yellow-400/10 rounded-2xl flex items-center justify-center mb-5">
+              <i class="fa-solid fa-calculator text-2xl text-yellow-300"></i>
+            </div>
+            <h4 class="text-xl font-bold mb-3">Abrir simulador oficial</h4>
+            <p class="text-zinc-400 text-sm leading-6 mb-6">
+              Use o simulador para estimar as tarifas de venda e os custos de envio aplicáveis ao seu anúncio e conferir quanto você receberá por unidade vendida.
+            </p>
+            <a href="https://www.mercadolivre.com.br/simulador-de-custos?utm_source=vendedores&utm_medium=referral&utm_campaign=Core_SimuladorDeCustos&utm_content=simuladordecustos"
+              target="_blank" rel="noopener noreferrer"
+              class="w-full bg-yellow-400 hover:bg-yellow-300 text-zinc-950 py-4 rounded-2xl font-bold transition flex items-center justify-center gap-3">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              Abrir Simulador de Custos
+            </a>
+          </div>
+
+          <div class="info-card border border-zinc-700 rounded-3xl p-7">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-list-check text-blue-400"></i>
+              </div>
+              <h4 class="text-xl font-bold">Como usar</h4>
+            </div>
+            <ol class="space-y-4 text-sm text-zinc-300">
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">1</span><span>Acesse sua conta do Mercado Livre.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">2</span><span>Selecione a categoria e a condição do produto.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">3</span><span>Informe o preço do produto que deseja anunciar.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">4</span><span>Escolha o tipo de anúncio e as condições de envio.</span></li>
+              <li class="flex gap-3"><span class="w-6 h-6 shrink-0 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">5</span><span>Confira a estimativa de custos e o valor que receberá pela venda.</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="info-card border border-zinc-800 rounded-2xl p-5">
+            <i class="fa-solid fa-circle-info text-yellow-300 mb-3"></i>
+            <h4 class="font-bold mb-2">Antes de anunciar</h4>
+            <p class="text-sm text-zinc-500 leading-6">
+              Você pode abrir o simulador diretamente e testar diferentes preços e condições de venda.
+            </p>
+          </div>
+          <div class="info-card border border-zinc-800 rounded-2xl p-5">
+            <i class="fa-solid fa-pen-to-square text-yellow-300 mb-3"></i>
+            <h4 class="font-bold mb-2">A partir de um anúncio</h4>
+            <p class="text-sm text-zinc-500 leading-6">
+              Na lista de anúncios, use “Simular custos” ou, ao alterar o preço, acesse “Ir para simulador de custos”.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 p-5 rounded-2xl bg-yellow-400/5 border border-yellow-400/10">
+          <p class="text-xs text-zinc-500 leading-5">
+            As alterações feitas no simulador não modificam automaticamente o anúncio. Para configurar o anúncio, é necessário voltar à edição e escolher as novas condições de venda.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    .plataforma-btn { background: transparent; transition: background .2s ease, color .2s ease; }
+    .plataforma-ativa {
+      background: rgba(59, 130, 246, 0.12);
+      color: #60a5fa;
+      box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.18);
+    }
+  </style>
+  <script src="precificador.js"></script>
+</body>
+</html>
