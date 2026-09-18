@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ecomfy — ferramentas inteligentes para quem vende em marketplaces. Precifique, analise suas vendas e agilize sua operação.">
+<title>Ecomfy — Venda melhor. Precifique certo. Lucre mais.</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="theme.js"></script><script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"><link rel="stylesheet" href="style.css">
+<style>
+[data-theme="light"] .public-navbar{background:rgba(255,255,255,.94)!important;border-color:#dbe3ed!important;color:#111827!important}
+[data-theme="light"] .public-navbar a:not(.public-primary){color:#334155!important}
+[data-theme="light"] .public-navbar a:not(.public-primary):hover{color:#2563eb!important}
+[data-theme="light"] .public-navbar .theme-toggle-btn{background:#f1f5f9!important;border-color:#c5d0dc!important;color:#334155!important}
+[data-theme="light"] .public-navbar .brand-name{color:#111827!important}
+[data-theme="light"] .public-navbar .public-login{border-color:#c5d0dc!important;background:#fff!important;color:#1f2937!important}
+[data-theme="light"] .public-navbar .public-login:hover{background:#f1f5f9!important;color:#2563eb!important}
+[data-theme="light"] .public-feature-section{background:#f1f5f9!important}
+[data-theme="light"] .public-feature-section .tool-card{background:#fff!important;border-color:#dbe3ed!important}
+.site-logo{display:inline-flex;align-items:center;gap:12px}
+.site-logo-mark{width:46px;height:46px;border-radius:13px;object-fit:cover;background:#fff;box-shadow:0 8px 24px -12px rgba(37,99,235,.75);flex:none}
+.site-logo-word{font-size:1.55rem;line-height:1;font-weight:900;letter-spacing:-.055em;color:#f4f4f5}
+.hero-logo{margin-bottom:30px}
+.hero-logo .site-logo-mark{width:76px;height:76px;border-radius:20px}
+.hero-logo .site-logo-word{font-size:3rem}
+.brand-divider{display:flex;align-items:center;gap:14px;margin:0 auto 26px;max-width:980px;color:#71717a}
+.brand-divider::before,.brand-divider::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,#3f3f46,transparent)}
+.brand-divider .site-logo-mark{width:38px;height:38px;border-radius:11px}
+.brand-divider .site-logo-word{font-size:1.25rem}
+.feature-logo{width:58px;height:58px;border-radius:16px;object-fit:cover;background:#fff;box-shadow:0 10px 24px -14px rgba(37,99,235,.7)}
+.identity-card{border:1px solid #27272a;background:rgba(24,24,27,.7);border-radius:24px;padding:24px;display:flex;align-items:center;gap:18px}
+[data-theme="light"] .identity-card{background:#fff;border-color:#dbe3ed}
+[data-theme="light"] .site-logo-word{color:#111827}
+[data-theme="light"] .brand-divider::before,[data-theme="light"] .brand-divider::after{background:linear-gradient(90deg,transparent,#cbd5e1,transparent)}
+.pricing-section{background:radial-gradient(circle at 50% 20%,rgba(37,99,235,.12),transparent 38%),#09090b}
+.pricing-card{max-width:620px;margin:0 auto;background:#18181b;border:1px solid #3f3f46;border-radius:28px;padding:34px;box-shadow:0 25px 70px -35px rgba(37,99,235,.45)}
+.pricing-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:rgba(37,99,235,.12);color:#60a5fa;font-size:.7rem;font-weight:900;letter-spacing:.1em}
+.pricing-price{font-size:3.5rem;line-height:1;font-weight:900;letter-spacing:-.05em}
+.pricing-list{display:grid;gap:12px;margin-top:25px;text-align:left}
+.pricing-list li{display:flex;align-items:flex-start;gap:10px;color:#d4d4d8;font-size:.92rem}
+.payment-methods{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:25px}
+.payment-method{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #3f3f46;border-radius:12px;background:#27272a;color:#d4d4d8;font-size:.8rem}
+[data-theme="light"] .pricing-section{background:radial-gradient(circle at 50% 20%,rgba(37,99,235,.09),transparent 38%),#f8fafc}
+[data-theme="light"] .pricing-card{background:#fff;border-color:#dbe3ed;box-shadow:0 25px 60px -40px rgba(15,23,42,.35)}
+[data-theme="light"] .pricing-list li{color:#334155}
+[data-theme="light"] .payment-method{background:#f8fafc;border-color:#cbd5e1;color:#334155}
+@media(max-width:640px){.site-logo-mark{width:40px;height:40px;border-radius:11px}.site-logo-word{font-size:1.35rem}.hero-logo{margin-bottom:24px}.hero-logo .site-logo-mark{width:58px;height:58px;border-radius:16px}.hero-logo .site-logo-word{font-size:2.2rem}.identity-card{padding:18px}.pricing-card{padding:26px 20px;border-radius:22px}.pricing-price{font-size:2.8rem}}
+</style>
+</head>
+<body class="bg-zinc-950 text-white">
+<header class="public-navbar sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800"><div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+<a href="index.html" class="site-logo" aria-label="Ecomfy"><img src="favicon.svg" class="site-logo-mark" alt=""><span class="site-logo-word"><span style="color:#4939f9">e</span>comfy</span></a>
+<nav class="hidden md:flex items-center gap-6 text-sm"><a href="#funcionalidades">Funcionalidades</a><a href="#planos">Planos</a><a href="contato.html">Contato</a></nav>
+<div class="flex items-center gap-2"><a href="auth.html" class="public-login h-10 px-4 rounded-xl border border-zinc-700 hover:bg-zinc-800 flex items-center font-semibold text-sm">Entrar</a><a href="auth.html?mode=signup" class="public-primary h-10 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white flex items-center font-semibold text-sm">Criar conta</a><button data-theme-toggle class="theme-toggle-btn w-10 h-10 rounded-xl border border-zinc-700 bg-zinc-800 flex items-center justify-center" aria-label="Alternar tema"><i class="fa-solid fa-sun icon-sun text-amber-400"></i><i class="fa-solid fa-moon icon-moon text-blue-300"></i></button></div>
+</div></header>
+<main>
+<section class="hero-section relative overflow-hidden"><div class="hero-glow"></div><div class="max-w-7xl mx-auto px-4 sm:px-6 py-24 sm:py-32 relative"><div class="max-w-4xl">
+<div class="site-logo hero-logo" aria-label="Ecomfy"><img src="favicon.svg" class="site-logo-mark" alt=""><span class="site-logo-word"><span style="color:#4939f9">e</span>comfy</span></div>
+<div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-300 mb-7"><i class="fa-solid fa-bolt"></i> Feito para quem vende online</div>
+<h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">Venda melhor.<br><span class="text-blue-500">Precifique certo.</span><br>Lucre mais.</h1>
+<p class="mt-7 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl">O Ecomfy reúne as ferramentas que você precisa para controlar preços, analisar vendas e agilizar a operação do seu marketplace.</p>
+<div class="flex flex-col sm:flex-row gap-3 mt-9"><a href="auth.html?mode=signup" class="primary-cta"><i class="fa-solid fa-rocket"></i> Criar minha conta grátis</a><a href="#funcionalidades" class="secondary-cta"><i class="fa-solid fa-arrow-down"></i> Conhecer o Ecomfy</a></div>
+<div class="flex flex-wrap gap-6 mt-8 text-sm text-zinc-500"><span><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Shopee</span><span><i class="fa-solid fa-check text-emerald-400 mr-2"></i>TikTok Shop</span><span><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Mercado Livre</span></div>
+</div></div></section>
+<section id="funcionalidades" class="public-feature-section py-20 sm:py-24 bg-zinc-900"><div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="section-heading"><span class="eyebrow">Seu centro de operação</span><h2 class="text-3xl sm:text-4xl font-bold mt-2">Tudo que o vendedor precisa em um só lugar</h2><p class="text-zinc-400 mt-4 max-w-2xl mx-auto">Ferramentas práticas para transformar dados da sua operação em decisões melhores.</p></div><div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-12">
+<article class="tool-card"><div class="flex items-center justify-between mb-5"><img src="favicon.svg" class="feature-logo" alt="Ecomfy"><span class="tool-label blue-text">PRECIFICAÇÃO</span></div><h3>Precificador Inteligente</h3><p>Calcule o preço de venda considerando custo, taxas, impostos, anúncios e sua margem de lucro.</p></article>
+<article class="tool-card"><div class="tool-icon green"><i class="fa-solid fa-chart-pie"></i></div><span class="tool-label green-text">ANÁLISE</span><h3>Painel de Vendas</h3><p>Entenda faturamento, pedidos, custos, cancelamentos e margem para descobrir o resultado real da sua operação.</p></article>
+<article class="tool-card"><div class="tool-icon orange"><i class="fa-solid fa-tags"></i></div><span class="tool-label orange-text">OPERAÇÃO</span><h3>Gerador de Etiquetas</h3><p>Converta arquivos ZPL em PDFs prontos para imprimir e agilize o despacho dos seus pedidos.</p></article>
+</div></div></section>
+<section class="py-10"><div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="brand-divider"><img src="favicon.svg" class="site-logo-mark" alt=""><span class="site-logo-word"><span style="color:#4939f9">e</span>comfy</span></div></div></section>
+<section class="py-20 sm:py-24"><div class="max-w-7xl mx-auto px-4 sm:px-6"><div class="grid lg:grid-cols-2 gap-12 items-center"><div><span class="eyebrow">Por que Ecomfy?</span><h2 class="text-3xl sm:text-4xl font-bold mt-3">Menos planilhas. Mais clareza sobre sua operação.</h2><p class="text-zinc-400 mt-5 leading-relaxed">O Ecomfy foi pensado para quem vende online e precisa tomar decisões rápidas sem depender de sistemas complicados.</p><div class="identity-card mt-7"><img src="favicon.svg" class="feature-logo" alt="Ecomfy"><div><strong class="text-lg">Uma identidade para sua operação</strong><p class="text-zinc-400 text-sm mt-1">Ferramentas conectadas em uma experiência simples, moderna e feita para o vendedor.</p></div></div><a href="auth.html?mode=signup" class="inline-flex items-center gap-2 mt-7 primary-cta">Começar agora <i class="fa-solid fa-arrow-right"></i></a></div><div class="steps-grid"><div class="step-card"><span>01</span><div><h3>Crie sua conta</h3><p>Cadastre-se rapidamente com sua conta Google.</p></div></div><div class="step-card"><span>02</span><div><h3>Escolha uma ferramenta</h3><p>Precifique produtos, analise vendas ou gere etiquetas.</p></div></div><div class="step-card"><span>03</span><div><h3>Tenha mais controle</h3><p>Centralize sua rotina e tome decisões com mais segurança.</p></div></div></div></div></div></section>
+<section id="planos" class="pricing-section py-20 sm:py-24"><div class="max-w-4xl mx-auto px-4 sm:px-6"><div class="section-heading"><span class="eyebrow">Plano simples e transparente</span><h2 class="text-3xl sm:text-4xl font-bold mt-2">Tenha o Ecomfy completo por um único valor</h2><p class="text-zinc-400 mt-4">Sem planos complicados. Assine o Premium e tenha acesso aos recursos disponíveis no Ecomfy.</p></div><div class="pricing-card mt-12 text-center"><div class="flex justify-center mb-4"><img src="favicon.svg" class="feature-logo" alt="Ecomfy"></div><span class="pricing-badge"><i class="fa-solid fa-crown"></i> PREMIUM</span><h3 class="text-2xl font-bold mt-5">Ecomfy Premium</h3><div class="mt-7"><span class="pricing-price">R$ 19,90</span><span class="text-zinc-400"> / mês</span></div><p class="text-zinc-400 mt-3">Cobrança mensal recorrente</p><ul class="pricing-list"><li><i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i><span>Precificador Inteligente</span></li><li><i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i><span>Painel de Vendas e análises</span></li><li><i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i><span>Gerador de Etiquetas</span></li><li><i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i><span>Recursos Premium disponíveis no Ecomfy</span></li><li><i class="fa-solid fa-circle-check text-emerald-400 mt-0.5"></i><span>Assinatura mensal com renovação automática conforme o meio de pagamento</span></li></ul><a href="auth.html?mode=signup" class="primary-cta w-full mt-8"><i class="fa-solid fa-rocket"></i> Começar agora</a><div class="payment-methods"><span class="payment-method"><i class="fa-regular fa-credit-card"></i> Cartão de crédito</span><span class="payment-method"><i class="fa-solid fa-wallet"></i> Saldo Mercado Pago</span></div><p class="text-xs text-zinc-500 mt-4"><i class="fa-solid fa-lock mr-1"></i> Pagamento processado com segurança pelo Mercado Pago.</p></div></div></section>
+<section class="privacy-section py-14"><div class="max-w-5xl mx-auto px-4 sm:px-6 flex items-start gap-5"><div class="privacy-icon"><i class="fa-solid fa-shield-halved"></i></div><div><h2 class="font-bold text-xl">Privacidade em primeiro lugar</h2><p class="text-zinc-400 mt-1">As ferramentas que processam arquivos trabalham localmente no navegador sempre que possível, reduzindo a exposição dos seus dados.</p></div></div></section>
+<section class="py-20 text-center"><div class="max-w-3xl mx-auto px-4"><div class="site-logo justify-center mb-7"><img src="favicon.svg" class="site-logo-mark" alt=""><span class="site-logo-word"><span style="color:#4939f9">e</span>comfy</span></div><span class="eyebrow">Pronto para começar?</span><h2 class="text-3xl sm:text-4xl font-bold mt-3">Tenha o Ecomfy ao seu lado na rotina da sua loja.</h2><p class="text-zinc-400 mt-4">Crie sua conta e conheça as ferramentas.</p><a href="auth.html?mode=signup" class="primary-cta inline-flex mt-7">Criar minha conta <i class="fa-solid fa-arrow-right"></i></a></div></section>
+</main><footer class="bg-black py-12 border-t border-zinc-800"><div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between gap-5 text-sm text-zinc-500"><div><a href="index.html" class="site-logo"><img src="favicon.svg" class="site-logo-mark" alt=""><span class="site-logo-word"><span style="color:#4939f9">e</span>comfy</span></a><p class="mt-3">Ferramentas inteligentes para quem vende online.</p></div><div class="flex gap-5 items-center"><a href="contato.html" class="hover:text-white">Contato</a><span>© 2026 Ecomfy</span></div></div></footer>
+<script src="script.js"></script>
+</body></html>
